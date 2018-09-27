@@ -1,4 +1,5 @@
 export default function coffeeShopReducer(state = {
+  id: null,
   name: null,
   address: null,
   email: null
