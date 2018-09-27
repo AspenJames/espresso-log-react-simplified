@@ -37,7 +37,7 @@ class Signup extends Component {
   }
 
   handleOnSubmit = event => {
-    event.preventSubmit;
+    event.preventDefault();
     console.log("state: ", this.state);
     //TODO: send to api
   }
