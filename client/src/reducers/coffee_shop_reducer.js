@@ -1,12 +1,11 @@
 export default function coffeeShopReducer(state = {
   id: null,
   name: null,
-  address: null,
-  email: null
+  address: null
 }, action) {
   switch(action.type) {
     case "ADD_COFFEE_SHOP":
-      return state;
+      return action.coffeeShop;
 
     default: 
       return state;

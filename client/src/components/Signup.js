@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { addCoffeeShop } from '../actions/coffeeShopActions';
 
 class Signup extends Component {
   state = {
@@ -41,6 +45,7 @@ class Signup extends Component {
     console.log("state: ", this.state);
     // prep data to send to api server
     const data = {"coffee_shop": this.state}
+    const addCoffeeShop = this.props.addCoffeeShop;
     // post to api server
     fetch('/api/v1/coffee_shops', {
       method: 'POST',
@@ -53,6 +58,7 @@ class Signup extends Component {
       .then(json => {
         console.log(json);
         //TODO: handle return data, submit to redux store
+        addCoffeeShop(json.coffee_shop);
     });
     // Reset state (also resets form)
     // fetch() is async, but since we store state in const data, this is fine
@@ -65,4 +71,12 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+const mapDispatchToProps = dispatch => {
+  return {
+    addCoffeeShop: coffeeShop => {
+      dispatch(addCoffeeShop(coffeeShop))
+    }
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(Signup));
