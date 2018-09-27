@@ -1,11 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-class NavBar extends Component {
-  render() {
-    return (
-      <div></div>
-    )
+
+const NavBar = (props) => {
+  const renderUserLinks = () => {
+    if (props.coffeeShop.id === null) {
+      return (
+        <React.Fragment>
+          <NavLink to='/login' exact>Login</NavLink><span> | </span>
+          <NavLink to='/signup' exact>Sign Up</NavLink>
+        </React.Fragment>
+      )
+    }
   }
+
+  return (
+    <div className='navbar'>
+      <NavLink to='/' exact>Home</NavLink><span> | </span>
+      {renderUserLinks()}
+    </div>
+  )
 }
 
 export default NavBar;

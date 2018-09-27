@@ -19,7 +19,7 @@ class App extends Component {
         </header> <br />
         <Router>
           <React.Fragment>
-            <NavBar /><br />
+            <NavBar coffeeShop={this.props.coffeeShop} /><br />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
           </React.Fragment>
@@ -29,4 +29,10 @@ class App extends Component {
   }
 }
 
-export default connect(App);
+const mapStateToProps = state => {
+  return {
+    coffeeShop: state.coffeeShop
+  }
+}
+
+export default connect(mapStateToProps)(App);
