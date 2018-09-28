@@ -31,8 +31,20 @@ class Login extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
-    console.log("state: ", this.state);
-    //TODO: send to api
+    // Prepare data to send to api
+    const data = {"coffee_shop": this.state}
+    fetch('/api/v1/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(resp => resp.json())
+      .then(json => {
+        console.log(json);
+        //TODO: update redux store
+      });
   }
 }
 
