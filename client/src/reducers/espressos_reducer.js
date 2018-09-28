@@ -1,7 +1,10 @@
 export default function espressosReducer(state = defaultState, action) {
   switch(action.type) {
-    case "ADD_ESPRESSO":
-      return {espressos: state.espressos.concat(action.espresso)};
+    case "LOADING_ESPRESSOS":
+      return {...state, loading: true}
+
+    case "FETCH_ESPRESSOS":
+      return {loading: false, espressos: action.espressos}
 
     case "@@RESET":
       return defaultState;
@@ -11,4 +14,4 @@ export default function espressosReducer(state = defaultState, action) {
   }
 }
 
-const defaultState = {espressos: []}
+const defaultState = {loading: false, espressos: []}
