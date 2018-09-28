@@ -14,6 +14,7 @@ const NavBar = (props) => {
     } else {
       return (
         <React.Fragment>
+          <NavLink to='/coffees' exact>Coffees</NavLink><span> | </span>
           <a href='/disabled' onClick={props.handleLogout}>Log Out</a>
         </React.Fragment>
       )
