@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { addCoffeeShop } from '../actions/coffeeShopActions';
 
 class Login extends Component {
   state = {
@@ -32,7 +36,8 @@ class Login extends Component {
   handleOnSubmit = event => {
     event.preventDefault();
     // Prepare data to send to api
-    const data = {"coffee_shop": this.state}
+    const data = {"coffee_shop": this.state};
+    const addCoffeeShop = this.props.addCoffeeShop;
     fetch('/api/v1/login', {
       method: 'POST',
       headers: {
@@ -42,10 +47,25 @@ class Login extends Component {
       body: JSON.stringify(data)
     }).then(resp => resp.json())
       .then(json => {
-        console.log(json);
-        //TODO: update redux store
+        // Update redux store with return data
+        addCoffeeShop(json.coffee_shop);
       });
+    // Reset state (also resets form data)
+    // fetch() is async, but since we store state in `const data`, this is fine
+    this.setState({
+      email: '',
+      password: ''
+    });
+    //TODO: redirect somewhere
   }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+  return {
+    addCoffeeShop: coffeeShop => {
+      dispatch(addCoffeeShop(coffeeShop))
+    }
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(Login));
