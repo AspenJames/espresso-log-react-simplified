@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { addCoffeeShop } from '../actions/coffeeShopActions';
+import { addOrigin } from '../actions/originsActions';
+import { addEspresso } from '../actions/espressosActions';
 
 class Login extends Component {
   state = {
@@ -38,6 +40,8 @@ class Login extends Component {
     // Prepare data to send to api
     const data = {"coffee_shop": this.state};
     const addCoffeeShop = this.props.addCoffeeShop;
+    const addOrigin = this.props.addOrigin;
+    const addEspresso = this.props.addEspresso;
     fetch('/api/v1/login', {
       method: 'POST',
       headers: {
@@ -49,6 +53,8 @@ class Login extends Component {
       .then(json => {
         // Update redux store with return data
         addCoffeeShop(json.coffee_shop);
+        json.coffee_shop.origins.forEach(origin => addOrigin(origin));
+        json.coffee_shop.espressos.forEach(esp => addEspresso(esp));
       });
     // Reset state (also resets form data)
     // fetch() is async, but since we store state in `const data`, this is fine
@@ -64,6 +70,12 @@ const mapDispatchToProps = dispatch => {
   return {
     addCoffeeShop: coffeeShop => {
       dispatch(addCoffeeShop(coffeeShop))
+    },
+    addEspresso: espresso => {
+      dispatch(addEspresso(espresso))
+    },
+    addOrigin: origin => {
+      dispatch(addOrigin(origin))
     }
   }
 }
