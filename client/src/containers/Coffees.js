@@ -24,7 +24,6 @@ class CoffeesContainer extends Component {
         </div>
       );
     } else {
-      debugger;
       return this.props.origins.map(origin => (
         <React.Fragment>
           <li key={origin.id}><a href={'/coffees/' + origin.id}>{origin.name}</a></li>
@@ -38,7 +37,6 @@ class CoffeesContainer extends Component {
 const mapStateToProps = state => {
   return {
     coffeeShop: state.coffeeShop,
-    espressos: state.espressos.espressos,
     origins: state.origins.origins
   }
 }
