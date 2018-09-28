@@ -19,13 +19,30 @@ class App extends Component {
         </header> <br />
         <Router>
           <React.Fragment>
-            <NavBar coffeeShop={this.props.coffeeShop} /><br />
+            <NavBar coffeeShop={this.props.coffeeShop} handleLogout={this.handleLogout} /><br />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
           </React.Fragment>
         </Router>
       </div>
     );
+  }
+
+  handleLogout = event => {
+    event.preventDefault();
+    // post logout request to api server
+    fetch('/api/v1/logout', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(resp => resp.json())
+      .then(json => {
+        // reset redux store
+        this.props.resetCoffeeShop();
+        //TODO: error handling?
+      })
   }
 }
 
@@ -35,4 +52,12 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    resetCoffeeShop: () => {
+      dispatch({ type: '@@RESET' });
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

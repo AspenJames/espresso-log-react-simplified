@@ -11,6 +11,12 @@ const NavBar = (props) => {
           <NavLink to='/signup' exact>Sign Up</NavLink>
         </React.Fragment>
       )
+    } else {
+      return (
+        <React.Fragment>
+          <a href='/disabled' onClick={props.handleLogout}>Log Out</a>
+        </React.Fragment>
+      )
     }
   }
 
