@@ -42,7 +42,6 @@ class Signup extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
-    console.log("state: ", this.state);
     // prep data to send to api server
     const data = {"coffee_shop": this.state}
     const addCoffeeShop = this.props.addCoffeeShop;
@@ -57,7 +56,6 @@ class Signup extends Component {
     }).then(resp => resp.json())
       .then(json => {
         console.log(json);
-        //TODO: handle return data, submit to redux store
         addCoffeeShop(json.coffee_shop);
     });
     // Reset state (also resets form)
