@@ -26,10 +26,16 @@ class CoffeesContainer extends Component {
     } else {
       return this.props.origins.map(origin => (
         <React.Fragment>
-          <li key={origin.id}><a href={'/coffees/' + origin.id}>{origin.name}</a></li>
+          <li key={origin.id}><a onClick={this.handleRedirect} href={'/coffees/' + origin.id}>{origin.name}</a></li>
         </React.Fragment>
       ));
     }
+  }
+
+  handleRedirect = event => {
+    // redirect with react router
+    event.preventDefault();
+    this.props.history.push(event.target.attributes.href.value)
   }
 
 }
