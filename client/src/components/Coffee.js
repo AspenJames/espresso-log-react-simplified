@@ -5,23 +5,33 @@ import { fetchEspressos } from '../actions/espressosActions';
 
 class Coffee extends Component {
   // Get id from url
-  originId = this.props.location.pathname.split('/')[2]
+  originId = this.props.location.pathname.split('/')[2];
+  origin = this.props.origins.find(o => o.id = this.originId);
   
   componentDidMount() {
     this.props.fetchEspressos(this.originId)
   }
 
   render() {
-    return (
-      <div>
-        <p>Coffee Show Page {this.originId}</p>
-      </div>
-    );
+    if (this.props.coffeeShop === undefined){
+      // Redirect to root if not logged in
+      this.props.history.push('/');
+      return null;
+    } else {
+      return (
+        <div>
+          <h1>{this.origin.name}</h1>
+          {/* <EspressoForm origin={this.origin} /> */}
+          //TODO: Espresso chart
+        </div>
+      );
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
+    origins: state.origins.origins,
     espressos: state.espressos.espressos
   }
 }
