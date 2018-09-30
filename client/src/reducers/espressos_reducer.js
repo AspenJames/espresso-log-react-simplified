@@ -6,6 +6,9 @@ export default function espressosReducer(state = defaultState, action) {
     case "FETCH_ESPRESSOS":
       return {loading: false, espressos: action.espressos}
 
+    case "ADD_ESPRESSO":
+      return {...state, espressos: state.espressos.concat(action.espresso)}
+
     case "@@RESET":
       return defaultState;
 

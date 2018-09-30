@@ -7,3 +7,5 @@ export const fetchEspressos = originId => {
       .then(espressos => dispatch({type: "FETCH_ESPRESSOS", espressos}));
   }
 }
+
+export const addEspresso = espresso => ({type: "ADD_ESPRESSO", espresso});
