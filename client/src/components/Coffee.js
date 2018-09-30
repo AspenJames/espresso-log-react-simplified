@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import EspressoForm from './EspressoForm';
 import { fetchEspressos } from '../actions/espressosActions';
 
 class Coffee extends Component {
@@ -13,7 +14,7 @@ class Coffee extends Component {
   }
 
   render() {
-    if (this.props.coffeeShop === undefined){
+    if (this.props.coffeeShop.id === undefined || this.props.origins.length ===0){
       // Redirect to root if not logged in
       this.props.history.push('/');
       return null;
@@ -21,8 +22,8 @@ class Coffee extends Component {
       return (
         <div>
           <h1>{this.origin.name}</h1>
-          {/* <EspressoForm origin={this.origin} /> */}
-          //TODO: Espresso chart
+          <EspressoForm />
+        {/* //TODO: Espresso chart */}
         </div>
       );
     }
@@ -31,6 +32,7 @@ class Coffee extends Component {
 
 const mapStateToProps = state => {
   return {
+    coffeeShop: state.coffeeShop,
     origins: state.origins.origins,
     espressos: state.espressos.espressos
   }
