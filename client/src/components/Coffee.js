@@ -7,7 +7,7 @@ import { fetchEspressos } from '../actions/espressosActions';
 class Coffee extends Component {
   // Get id from url
   originId = this.props.location.pathname.split('/')[2];
-  origin = this.props.origins.find(o => o.id = this.originId);
+  origin = this.props.origins.find(o => o.id === parseInt(this.originId, 10));
   
   componentDidMount() {
     this.props.fetchEspressos(this.originId)
