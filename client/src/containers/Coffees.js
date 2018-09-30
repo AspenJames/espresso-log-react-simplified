@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import CoffeeForm from '../components/CoffeeForm';
+
 class CoffeesContainer extends Component {
   render() {
     // redirect to root if not logged in
@@ -9,8 +11,13 @@ class CoffeesContainer extends Component {
       return null;
     } else {
       return (
-        <div>{this.renderCoffees()}</div>
-        //TODO: add coffee form
+        <div>
+          <h2>Your Coffees:</h2>
+          {this.renderCoffees()}
+          <br />
+          <h3>Add a new coffee:</h3>
+          <CoffeeForm coffeeShopId={this.props.coffeeShop.id}/>
+        </div>
       )
     }
   }
@@ -35,6 +42,7 @@ class CoffeesContainer extends Component {
   handleRedirect = event => {
     // redirect with react router
     event.preventDefault();
+    event.stopPropagation();
     this.props.history.push(event.target.attributes.href.value)
   }
 
