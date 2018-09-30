@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-// import { addEspresso } from '../actions/espressosActions';
+import { addEspresso } from '../actions/espressosActions';
 
 class EspressoForm extends Component {
   state = {
@@ -41,7 +42,38 @@ class EspressoForm extends Component {
   handleOnSubmit = event => {
     event.preventDefault();
     console.log(this.state);
+    // prepare data to send to api
+    const data = {"espresso": this.state};
+    const addEspresso = this.props.addEspresso;
+    // post to api
+    fetch(`/api/v1/origins/${this.props.originId}/espressos`, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(resp => resp.json())
+      .then(json => {
+        console.log(json);
+        // add to redux store
+        addEspresso(json.espresso);
+      })
+    // reset state and form
+    // fetch() is async, but since we store state in `const data` this is okay
+    this.setState({
+      dose: '',
+      yield: '',
+      time: '',
+      notes: ''
+    });
   }
 }
 
-export default EspressoForm;
+const mapDispatchToProps = dispatch => {
+  return {
+    addEspresso: espresso => dispatch(addEspresso(espresso))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(EspressoForm);
