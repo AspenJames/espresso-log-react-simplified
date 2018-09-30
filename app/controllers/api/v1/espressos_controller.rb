@@ -15,6 +15,12 @@ module Api
         end
       end
 
+      def destroy
+        esp = Espresso.find(params[:id])
+        esp.destroy
+        render :json => {"destroy": esp}
+      end
+
       private
       def espresso_params
         params.require(:espresso).permit(:dose, :yield, :time, :notes)
