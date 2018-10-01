@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+c = CoffeeShop.create(:name => "Cafe Code", :address => "111 Programmer Ave", :email => "code@cafe.com", :password => "password")
+guatemala = c.origins.build(:name => "Guatemala La Bolsa")
+ethiopia = c.origins.build(:name => "Ethiopia Guji")
+guatemala.espressos.build(:dose => 18, :yield => 35, :time => 28, :days_off_roast => 7, :notes => "Cocoa, chocolate-covered orange")
+guatemala.espressos.build(:dose => 19, :yield => 32, :time => 30, :days_off_roast => 8, :notes => "Dense, dark chocolate syrup")
+ethiopia.espressos.build(:dose => 18 , :yield => 40, :time => 28, :days_off_roast => 4, :notes => "Juicy peach, slight floral notes")
+ethiopia.espressos.build(:dose => 18, :yield => 32, :time => 32, :days_off_roast => 5, :notes => "Intense, not balanced at all")
+c.save
