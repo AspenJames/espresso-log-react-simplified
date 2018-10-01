@@ -23,7 +23,7 @@ module Api
 
       private
       def espresso_params
-        params.require(:espresso).permit(:dose, :yield, :time, :notes)
+        params.require(:espresso).permit(:dose, :yield, :time, :notes, :days_off_roast)
       end
     end
   end

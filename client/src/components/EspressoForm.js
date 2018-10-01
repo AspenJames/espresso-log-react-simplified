@@ -8,6 +8,7 @@ class EspressoForm extends Component {
     dose: '',
     yield:  '',
     time: '',
+    days_off_roast: '',
     notes: ''
   }
 
@@ -23,6 +24,9 @@ class EspressoForm extends Component {
                  onChange={this.handleOnChange} /><br />
           <label>Time: </label>
           <input type='number' id='time' value={this.state.time}
+                 onChange={this.handleOnChange} /><br />
+          <label>Days off Roast: </label>
+          <input type='number' id='days_off_roast' value={this.state.days_off_roast} 
                  onChange={this.handleOnChange} /><br />
           <label>Notes: </label>
           <input type='text' id='notes' value={this.state.notes}
