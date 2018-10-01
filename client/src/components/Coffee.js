@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import EspressoForm from './EspressoForm';
+import EspressoChart from './EspressoChart';
 import { fetchEspressos } from '../actions/espressosActions';
 
 class Coffee extends Component {
@@ -23,7 +24,7 @@ class Coffee extends Component {
         <div>
           <h1>{this.origin.name}</h1>
           <EspressoForm originId={this.originId}/>
-        {/* //TODO: Espresso chart */}
+          <EspressoChart espressos={this.props.espressos} />
         </div>
       );
     }
