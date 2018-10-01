@@ -66,6 +66,14 @@ class EspressoChart extends Component {
       },
       {
         type: "spline",
+        name: "Days Off Roast",
+        showInLegend: false,
+        dataPoints: this.props.espressos.map(esp => {
+          return ({y: esp.days_off_roast, label: esp.id})
+        })
+      },
+      {
+        type: "spline",
         name: "notes",
         showInLegend: false,
         dataPoints: this.props.espressos.map(esp => {
