@@ -36,6 +36,8 @@ class Login extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
+    // Clear error div
+    document.getElementById('formErrors').innerHTML = null;
     // Prepare data to send to api
     const data = {"coffee_shop": this.state};
     const addCoffeeShop = this.props.addCoffeeShop;
@@ -49,17 +51,24 @@ class Login extends Component {
       body: JSON.stringify(data)
     }).then(resp => resp.json())
       .then(json => {
-        // Update redux store with return data
-        addCoffeeShop(json.coffee_shop);
-        json.coffee_shop.origins.forEach(origin => addOrigin(origin));
+        if (json.coffee_shop) {
+          // Update redux store with return data
+          addCoffeeShop(json.coffee_shop);
+          json.coffee_shop.origins.forEach(origin => addOrigin(origin));
+          // Reset state and form
+          this.setState({
+            email: '',
+            password: ''
+          });
+          // Redirect to coffees page
+          this.props.history.push('/coffees');
+        } else {
+          document.getElementById('formErrors').innerHTML = json.error;
+          this.setState({
+            password: ''
+          });
+        }
       });
-    // Reset state (also resets form data)
-    // fetch() is async, but since we store state in `const data`, this is fine
-    this.setState({
-      email: '',
-      password: ''
-    });
-    //TODO: redirect somewhere
   }
 }
 
