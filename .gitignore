@@ -24,3 +24,6 @@
 
 # Ignore vim swap files
 *.swp
+
+# Ignore notes
+NOTES.md
