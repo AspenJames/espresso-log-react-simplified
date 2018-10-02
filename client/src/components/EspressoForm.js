@@ -15,6 +15,7 @@ class EspressoForm extends Component {
   render() {
     return (
       <div className='formContainer'>
+        <div id='formErrors' />
         <form className='newEspresso' onSubmit={this.handleOnSubmit}>
           <label>Dose: </label>
           <input type='number' id='dose' value={this.state.dose}
@@ -45,10 +46,10 @@ class EspressoForm extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
+    // clear error div
+    document.getElementById('formErrors').innerHTML = null;
     // prepare data to send to api
     const data = {"espresso": this.state};
-    const addEspresso = this.props.addEspresso;
     // post to api
     fetch(`/api/v1/origins/${this.props.originId}/espressos`, {
       method: "POST",
@@ -59,18 +60,20 @@ class EspressoForm extends Component {
       body: JSON.stringify(data)
     }).then(resp => resp.json())
       .then(json => {
-        console.log(json);
-        // add to redux store
-        addEspresso(json.espresso);
+        if (json.espresso) {
+          // add to redux store
+          this.props.addEspresso(json.espresso);
+          this.setState({
+            dose: '',
+            yield: '',
+            time: '',
+            days_off_roast: '',
+            notes: ''
+          });
+        } else {
+          document.getElementById('formErrors').innerHTML = json.errors.join(", ");
+        }
       })
-    // reset state and form
-    // fetch() is async, but since we store state in `const data` this is okay
-    this.setState({
-      dose: '',
-      yield: '',
-      time: '',
-      notes: ''
-    });
   }
 }
 
