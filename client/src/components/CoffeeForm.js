@@ -11,6 +11,7 @@ class CoffeeForm extends Component {
   render(){
     return (
       <div className='formContainer'>
+        <div id='formErrors' />
         <form className='newCoffee' onSubmit={this.handleOnSubmit}>
           <label>Name: </label>
           <input type='text' id='name' value={this.state.name}
@@ -29,10 +30,10 @@ class CoffeeForm extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
+    // clear errors div
+    document.getElementById('formErrors').innerHTML = null;
     // prepare data to send to api
     const data = {"origin": this.state, "coffeeShopId": this.props.coffeeShopId};
-    const addOrigin = this.props.addOrigin;
     // post to api
     fetch('/api/v1/origins', {
       method: 'POST',
@@ -43,15 +44,15 @@ class CoffeeForm extends Component {
       body: JSON.stringify(data)
     }).then(resp => resp.json())
       .then(json => {
-        console.log(json);
-        //TODO: add to store
-        addOrigin(json.origin);
+        if (json.origin) {
+          this.props.addOrigin(json.origin);
+          this.setState({
+            name: ''
+          });
+        } else {
+          document.getElementById('formErrors').innerHTML = json.errors.join(", ");
+        }
       });
-    // reset state and form
-    // fetch() is async, but we store the state in `const data` so this is okay
-    this.setState({
-      name: ''
-    });
   }
 }
 

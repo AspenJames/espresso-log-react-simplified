@@ -8,7 +8,7 @@ module Api
         if origin.save
           render :json => origin
         else
-          render :json => origin.errors.full_messages
+          render :json => {"errors": origin.errors.full_messages}
         end
       end
 
