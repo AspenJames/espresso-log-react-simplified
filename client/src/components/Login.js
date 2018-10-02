@@ -12,6 +12,10 @@ class Login extends Component {
   }
 
   render() {
+    if (this.props.coffeeShop.id !== null) {
+      this.props.history.push('/coffees');
+      return null;
+    }
     return (
       <div className='formContainer'>
         <div id='formErrors' />
@@ -72,6 +76,12 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    coffeeShop: state.coffeeShop
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     addCoffeeShop: coffeeShop => {
@@ -83,4 +93,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Login));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

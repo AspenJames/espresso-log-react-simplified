@@ -23,7 +23,7 @@ class Coffee extends Component {
       return (
         <div>
           <h1>{this.origin.name}</h1>
-          <EspressoForm originId={this.originId}/>
+          <EspressoForm originId={this.originId}/><br />
           <EspressoChart espressos={this.props.espressos} />
         </div>
       );
