@@ -3,6 +3,9 @@ export default function originsReducer(state = defaultState, action) {
     case "ADD_ORIGIN":
       return {origins: state.origins.concat(action.origin)};
 
+    case "RESET_STATE":
+      return {origins: action.payload.origins.origins};
+
     case "@@RESET":
       return defaultState;
 
