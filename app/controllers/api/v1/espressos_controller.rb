@@ -11,7 +11,7 @@ module Api
         if e.save
           render :json => e
         else
-          render :json => e.errors.full_messages
+          render :json => {"errors": e.errors.full_messages}
         end
       end
 
