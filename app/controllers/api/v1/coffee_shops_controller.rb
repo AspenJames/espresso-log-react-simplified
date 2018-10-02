@@ -12,7 +12,7 @@ module Api
           session[:id] = @cs.id
           render :json => @cs
         else
-          render :json => @cs.errors.full_messages
+          render :json => {"errors": @cs.errors.full_messages}
         end
       end
 

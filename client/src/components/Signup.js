@@ -15,6 +15,7 @@ class Signup extends Component {
   render() {
     return (
       <div className='formContainer'>
+        <div id='formErrors' />
         <form className='signup' onSubmit={this.handleOnSubmit}>
           <label>Coffee Shop Name: </label>
           <input type='text' id='name' value={this.state.name}
@@ -42,6 +43,8 @@ class Signup extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
+    // Reset error div
+    document.getElementById('formErrors').innerHTML = null;
     // prep data to send to api server
     const data = {"coffee_shop": this.state}
     const addCoffeeShop = this.props.addCoffeeShop;
@@ -55,16 +58,22 @@ class Signup extends Component {
       body: JSON.stringify(data)
     }).then(resp => resp.json())
       .then(json => {
-        console.log(json);
-        addCoffeeShop(json.coffee_shop);
-    });
-    // Reset state (also resets form)
-    // fetch() is async, but since we store state in const data, this is fine
-    this.setState({
-      name: '',
-      address: '',
-      email: '',
-      password: ''
+        if (json.coffee_shop) {
+          // Add to store
+          addCoffeeShop(json.coffee_shop);
+          // Reset state and form
+          this.setState({
+            name: '',
+            address: '',
+            email: '',
+            password: ''
+          });
+        } else {
+          document.getElementById('formErrors').innerHTML = json.errors.join(', ');
+          this.setState({
+            password: ''
+          });
+        }
     });
   }
 }
