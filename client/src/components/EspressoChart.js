@@ -15,6 +15,12 @@ class EspressoChart extends Component {
   }
 
   render() {
+    // get array of espressos
+    let espressoData = this.props.espressos
+    // shift() down to desired limit
+    while (espressoData.length > this.props.limit) {
+      espressoData.shift();
+    }
 
     const options = {
       animationEnabled: true,
@@ -43,7 +49,7 @@ class EspressoChart extends Component {
         type: "spline",
         name: "dose",
         showInLegend: true,
-        dataPoints: this.props.espressos.map(esp => {
+        dataPoints: espressoData.map(esp => {
           return ({y: esp.dose, label: esp.id})
         })
       },
@@ -51,7 +57,7 @@ class EspressoChart extends Component {
         type: "spline",
         name: "yield",
         showInLegend: true,
-        dataPoints: this.props.espressos.map(esp => {
+        dataPoints: espressoData.map(esp => {
           return ({y: esp.yield, label: esp.id})
         })
       },
@@ -59,7 +65,7 @@ class EspressoChart extends Component {
         type: "spline",
         name: "time",
         showInLegend: true,
-        dataPoints: this.props.espressos.map(esp => {
+        dataPoints: espressoData.map(esp => {
           return ({y: esp.time, label: esp.id})
         })
       },
@@ -68,7 +74,7 @@ class EspressoChart extends Component {
         name: "Days Off Roast",
         showInLegend: true,
         visible: false,
-        dataPoints: this.props.espressos.map(esp => {
+        dataPoints: espressoData.map(esp => {
           return ({y: esp.days_off_roast, label: esp.id})
         })
       },
@@ -76,7 +82,7 @@ class EspressoChart extends Component {
         type: "spline",
         name: "notes",
         showInLegend: false,
-        dataPoints: this.props.espressos.map(esp => {
+        dataPoints: espressoData.map(esp => {
           return ({ y: esp.notes, label: esp.id })
         })
       }
