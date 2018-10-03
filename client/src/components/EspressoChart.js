@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 const CanvasJSReact = require('../lib/canvasjs.react');
-const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class EspressoChart extends Component {
@@ -67,7 +66,8 @@ class EspressoChart extends Component {
       {
         type: "spline",
         name: "Days Off Roast",
-        showInLegend: false,
+        showInLegend: true,
+        visible: false,
         dataPoints: this.props.espressos.map(esp => {
           return ({y: esp.days_off_roast, label: esp.id})
         })
@@ -82,6 +82,7 @@ class EspressoChart extends Component {
       }
       ]
     }
+
     return (
       <div>
         <CanvasJSChart options={options} onRef={ref => this.chart = ref} />
