@@ -35,9 +35,10 @@ class Coffee extends Component {
         <div>
           <h1>{this.origin.name}</h1>
           <EspressoForm originId={this.originId}/><br />
-          <label>Number of espressos to graph: </label>
-          <input type='number' onChange={this.handleOnChange} value={this.state.limit} />
-          <br />
+          <span>Show me the last </span>
+          <input type='number' className='short' onChange={this.handleOnChange} value={this.state.limit} />
+          <span> espresso recipes.</span>
+          <br /><br />
           <EspressoChart limit={this.state.limit} espressos={this.props.espressos} />
         </div>
       );

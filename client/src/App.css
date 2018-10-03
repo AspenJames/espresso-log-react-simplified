@@ -31,3 +31,7 @@
   color: red;
   margin-bottom: 20px;
 }
+
+input.short {
+  width: 45px;
+}

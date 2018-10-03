@@ -15,12 +15,9 @@ class EspressoChart extends Component {
   }
 
   render() {
-    // get array of espressos
-    let espressoData = this.props.espressos
-    // shift() down to desired limit
-    while (espressoData.length > this.props.limit) {
-      espressoData.shift();
-    }
+    // this takes passed in espressos array, takes last `limit` elements
+    // this.props.limit is passed in from input in parent component, Coffee.js
+    let espressoData = this.props.espressos.slice(-this.props.limit)
 
     const options = {
       animationEnabled: true,
