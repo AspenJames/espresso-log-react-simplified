@@ -10,6 +10,7 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import CoffeesContainer from './Coffees.js';
 import Coffee from '../components/Coffee.js';
+import Espresso from '../components/Espresso';
 import Welcome from '../components/Welcome';
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
             <Route exact path='/signup' component={Signup} />
             <Route exact path='/coffees' component={CoffeesContainer} />
             <Route exact path='/coffees/:id' component={Coffee} />
+            <Route exact path='/coffees/:id/espressos/:id' component={Espresso} />
           </React.Fragment>
         </Router>
       </div>

@@ -39,7 +39,7 @@ class Coffee extends Component {
           <input type='number' className='short' onChange={this.handleOnChange} value={this.state.limit} />
           <span> espresso recipes.</span>
           <br /><br />
-          <EspressoChart limit={this.state.limit} espressos={this.props.espressos} />
+          <EspressoChart limit={this.state.limit} espressos={this.props.espressos} originId={this.originId}/>
         </div>
       );
     }

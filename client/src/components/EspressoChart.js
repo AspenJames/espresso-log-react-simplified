@@ -15,7 +15,7 @@ class EspressoChart extends Component {
   }
 
   onClick = espressoId => {
-    // TODO: redirect to /espressos/${espressoId}
+    // TODO: redirect to /coffees/${originId]/${espressoId}
   }
 
   render() {
