@@ -14,6 +14,10 @@ class EspressoChart extends Component {
     this.chart.render();
   }
 
+  onClick = espressoId => {
+    // TODO: redirect to /espressos/${espressoId}
+  }
+
   render() {
     // this takes passed in espressos array, takes last `limit` elements
     // this.props.limit is passed in from input in parent component, Coffee.js
@@ -47,7 +51,7 @@ class EspressoChart extends Component {
         name: "dose",
         showInLegend: true,
         dataPoints: espressoData.map(esp => {
-          return ({y: esp.dose, label: esp.id})
+          return ({y: esp.dose, label: esp.id, click: () => this.onClick(esp.id)})
         })
       },
       {
@@ -55,7 +59,7 @@ class EspressoChart extends Component {
         name: "yield",
         showInLegend: true,
         dataPoints: espressoData.map(esp => {
-          return ({y: esp.yield, label: esp.id})
+          return ({ y: esp.yield, label: esp.id, click: () => this.onClick(esp.id)})
         })
       },
       {
@@ -63,7 +67,7 @@ class EspressoChart extends Component {
         name: "time",
         showInLegend: true,
         dataPoints: espressoData.map(esp => {
-          return ({y: esp.time, label: esp.id})
+          return ({ y: esp.time, label: esp.id, click: () => this.onClick(esp.id)})
         })
       },
       {
@@ -72,7 +76,7 @@ class EspressoChart extends Component {
         showInLegend: true,
         visible: false,
         dataPoints: espressoData.map(esp => {
-          return ({y: esp.days_off_roast, label: esp.id})
+          return ({ y: esp.days_off_roast, label: esp.id, click: () => this.onClick(esp.id)})
         })
       },
       {
