@@ -9,3 +9,5 @@ export const fetchEspressos = originId => {
 }
 
 export const addEspresso = espresso => ({type: "ADD_ESPRESSO", espresso});
+
+export const updateEspresso = espresso => ({type: "UPDATE_ESPRESSO", espresso});
