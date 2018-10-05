@@ -15,6 +15,9 @@ export default function espressosReducer(state = defaultState, action) {
       new_espressos[idx] = action.espresso;
       return {...state, espressos: new_espressos}
 
+    case "DELETE_ESPRESSO":
+      return {...state, espressos: state.espressos.filter(esp => esp.id !== action.espressoId)}
+
     case "RESET_STATE":
       return {...state, espressos: action.payload.espressos.espressos};
 
