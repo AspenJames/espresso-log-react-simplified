@@ -2,7 +2,7 @@ module Api
   module V1
     class EspressosController < ApplicationController
       def index
-        render :json => Origin.find(params[:origin_id]).espressos
+        render :json => Origin.find(params[:origin_id]).espressos.order("espressos.created_at")
       end
 
       def create
