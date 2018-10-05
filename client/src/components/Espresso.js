@@ -11,6 +11,7 @@ class Espresso extends Component {
   espresso = this.props.espressos.find(esp => esp.id === this.espressoId);
   origin = this.props.origins.find(origin => origin.id === this.originId);
 
+  id: this.espresso.id,
   state = {
     dose: this.espresso.dose,
     yield: this.espresso.yield,
@@ -53,8 +54,23 @@ class Espresso extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("submitted: ", this.state);
-    //TODO: send to api + update store
+    // prepare data to send to api
+    const data = {"coffeeShopId": this.props.coffeeShop.id,
+                  "originId": this.origin.id,
+                  "espresso": this.state}
+    // post to api
+    fetch(`/api/v1/origins/${this.originId}/espressos/${this.espressoId}`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(resp => resp.json())
+      .then(json => {
+        console.log("response: ", json);
+        //TODO: update store with return data
+      })
   }
 }
 

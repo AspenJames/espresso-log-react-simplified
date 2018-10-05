@@ -21,6 +21,19 @@ module Api
         render :json => {"destroy": esp}
       end
 
+      def update
+        origin = Origin.find(params[:originId])
+        coffee_shop = CoffeeShop.find(params[:coffeeShopId])
+        espresso = origin.espressos.find(params[:espresso][:id])
+
+        if espresso.coffee_shop = coffee_shop
+          espresso.update(espresso_params)
+          render :json => {"updated": espresso}
+        else
+          render :json => {"unauthorized": "You may not edit another coffee shop's espresso recipes."}
+        end
+      end
+
       private
       def espresso_params
         params.require(:espresso).permit(:dose, :yield, :time, :notes, :days_off_roast)
