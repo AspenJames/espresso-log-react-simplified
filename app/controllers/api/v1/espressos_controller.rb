@@ -16,9 +16,10 @@ module Api
       end
 
       def destroy
-        esp = Espresso.find(params[:id])
-        esp.destroy
-        render :json => {"destroy": esp}
+        espresso = Espresso.find(params[:espressoId])
+        if espresso.destroy
+          render :json => espresso
+        end
       end
 
       def update

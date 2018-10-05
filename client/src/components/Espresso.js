@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { updateEspresso } from '../actions/espressosActions';
+import { updateEspresso, deleteEspresso } from '../actions/espressosActions';
 
 class Espresso extends Component {
 
@@ -45,7 +45,7 @@ class Espresso extends Component {
           <input type='submit' value='Update Espresso' />
         </form>
         <br /><br />
-        <button onClick={this.handleDelete}>Delete Espresso</button>
+        <button onClick={() => this.handleDelete(this.espressoId)}>Delete Espresso</button>
       </div>
     );
   }
@@ -79,8 +79,22 @@ class Espresso extends Component {
       })
   }
 
-  handleDelete = event => {
-    debugger;
+  handleDelete = espressoId => {
+    // delete on api side
+    fetch(`/api/v1/origins/${this.originId}/espressos/${this.espressoId}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({espressoId})
+    }).then(resp => resp.json())
+      .then(json => {
+        //update store with return data
+        this.props.deleteEspresso(json.espresso.id);
+        //redirect to origin
+        this.props.history.push(`/coffees/${this.originId}`)
+      })
   }
 }
 
@@ -94,8 +108,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateEspresso:  espresso => {
+    updateEspresso: espresso => {
       dispatch(updateEspresso(espresso))
+    },
+    deleteEspresso: espressoId => {
+      dispatch(deleteEspresso(espressoId))
     }
   }
 }
