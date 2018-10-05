@@ -44,6 +44,8 @@ class Espresso extends Component {
                  onChange={this.handleOnChange} /><br />
           <input type='submit' value='Update Espresso' />
         </form>
+        <br /><br />
+        <button onClick={this.handleDelete}>Delete Espresso</button>
       </div>
     );
   }
@@ -72,8 +74,13 @@ class Espresso extends Component {
       .then(json => {
         //update store with return data
         this.props.updateEspresso(json.espresso);
-        //TODO: redirect back to /coffees/${originId}
+        // redirect back to /coffees/${originId}
+        this.props.history.push(`/coffees/${this.originId}`);
       })
+  }
+
+  handleDelete = event => {
+    debugger;
   }
 }
 

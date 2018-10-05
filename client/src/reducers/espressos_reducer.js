@@ -10,7 +10,6 @@ export default function espressosReducer(state = defaultState, action) {
       return {...state, espressos: state.espressos.concat(action.espresso)}
 
     case "UPDATE_ESPRESSO":
-      debugger;
       const idx = state.espressos.indexOf(state.espressos.find(esp => esp.id === action.espresso.id));
       let new_espressos = JSON.parse(JSON.stringify(state.espressos));
       new_espressos[idx] = action.espresso;
