@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 const CanvasJSReact = require('../lib/canvasjs.react');
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -15,7 +16,8 @@ class EspressoChart extends Component {
   }
 
   onClick = espressoId => {
-    // TODO: redirect to /coffees/${originId]/${espressoId}
+    // redirect to /coffees/${originId]/${espressoId}
+    this.props.history.push(`/coffees/${this.props.originId}/espressos/${espressoId}`);
   }
 
   render() {
@@ -98,4 +100,4 @@ class EspressoChart extends Component {
   }
 }
 
-export default EspressoChart;
+export default withRouter(EspressoChart);
