@@ -28,7 +28,7 @@ module Api
 
         if espresso.coffee_shop = coffee_shop
           espresso.update(espresso_params)
-          render :json => {"updated": espresso}
+          render :json => espresso
         else
           render :json => {"unauthorized": "You may not edit another coffee shop's espresso recipes."}
         end

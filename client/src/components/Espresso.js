@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { updateEspresso } from '../actions/espressosActions';
+
 class Espresso extends Component {
 
   // Get origin and espresso id from url
@@ -11,8 +13,8 @@ class Espresso extends Component {
   espresso = this.props.espressos.find(esp => esp.id === this.espressoId);
   origin = this.props.origins.find(origin => origin.id === this.originId);
 
-  id: this.espresso.id,
   state = {
+    id: this.espresso.id,
     dose: this.espresso.dose,
     yield: this.espresso.yield,
     time: this.espresso.time,
@@ -68,8 +70,9 @@ class Espresso extends Component {
       body: JSON.stringify(data)
     }).then(resp => resp.json())
       .then(json => {
-        console.log("response: ", json);
-        //TODO: update store with return data
+        //update store with return data
+        this.props.updateEspresso(json.espresso);
+        //TODO: redirect back to /coffees/${originId}
       })
   }
 }
@@ -82,4 +85,12 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Espresso);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateEspresso:  espresso => {
+      dispatch(updateEspresso(espresso))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Espresso);
