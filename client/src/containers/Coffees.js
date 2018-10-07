@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import CoffeesList from '../components/CoffeesList';
 import CoffeeForm from '../components/CoffeeForm';
 
 class CoffeesContainer extends Component {
@@ -31,11 +32,7 @@ class CoffeesContainer extends Component {
         </div>
       );
     } else {
-      return this.props.origins.map(origin => (
-        <React.Fragment key={origin.id}>
-          <li><a onClick={this.handleRedirect} href={'/coffees/' + origin.id}>{origin.name}</a></li>
-        </React.Fragment>
-      ));
+      return <CoffeesList coffees={this.props.origins} handleOnClick={this.handleOnClick} />;
     }
   }
 
