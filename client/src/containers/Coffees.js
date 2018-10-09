@@ -36,7 +36,7 @@ class CoffeesContainer extends Component {
     }
   }
 
-  handleRedirect = event => {
+  handleOnClick = event => {
     // redirect with react router
     event.preventDefault();
     event.stopPropagation();
