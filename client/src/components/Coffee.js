@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import EspressoForm from './EspressoForm';
 import EspressoChart from './EspressoChart';
 import { fetchEspressos } from '../actions/espressosActions';
+import Espressos from './Espressos';
 
 class Coffee extends Component {
 
   state = {
-    limit: 10
+    limit: 10,
+    display: 'list'
   };
 
   // Get id from url
@@ -22,6 +24,22 @@ class Coffee extends Component {
   handleOnChange = event => {
     this.setState({
       limit: event.target.value
+    });
+  }
+
+  handleOnClick = event => {
+    event.preventDefault();
+    this.props.history.push(event.target.attributes.href.value);
+  }
+
+  toggleVisibility = () => {
+    const chart = document.getElementById('espressoChart');
+    const list = document.getElementById('espressosList');
+    chart.style.display = (chart.style.display === 'block' ? 'none' : 'block');
+    list.style.display = (list.style.display === 'block' ? 'none' : 'block');
+    const display = (this.state.display === 'list' ? 'chart' : 'list')
+    this.setState({
+      display: display
     });
   }
 
@@ -39,7 +57,9 @@ class Coffee extends Component {
           <input type='number' className='short' onChange={this.handleOnChange} value={this.state.limit} />
           <span> espresso recipes.</span>
           <br /><br />
-          <EspressoChart limit={this.state.limit} espressos={this.props.espressos} originId={this.originId}/>
+          <EspressoChart limit={this.state.limit} espressos={this.props.espressos} originId={this.originId}/><br />
+          <div id='espressosList' style={{display: "none"}} ><Espressos espressos={this.props.espressos} handleOnClick={this.handleOnClick} originId={this.originId} /><br /></div>
+          <button id='show' onClick={this.toggleVisibility}>Show espressos as {this.state.display}</button>
         </div>
       );
     }

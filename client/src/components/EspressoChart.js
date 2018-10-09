@@ -93,7 +93,7 @@ class EspressoChart extends Component {
     }
 
     return (
-      <div>
+      <div id='espressoChart' style={{display: 'block'}} >
         <CanvasJSChart options={options} onRef={ref => this.chart = ref} />
       </div>
     )
