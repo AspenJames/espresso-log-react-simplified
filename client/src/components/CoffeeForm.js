@@ -30,29 +30,22 @@ class CoffeeForm extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
+    const errorDiv = document.getElementById('formErrors');
     // clear errors div
-    document.getElementById('formErrors').innerHTML = null;
-    // prepare data to send to api
-    const data = {"origin": this.state, "coffeeShopId": this.props.coffeeShopId};
-    // post to api
-    fetch('/api/v1/origins', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(resp => resp.json())
-      .then(json => {
-        if (json.origin) {
-          this.props.addOrigin(json.origin);
-          this.setState({
-            name: ''
-          });
-        } else {
-          document.getElementById('formErrors').innerHTML = json.errors.join(", ");
-        }
+    errorDiv.innerHTML = null;
+    if (this.state.name.length > 0) {
+      // prepare data to send to api
+      const data = {"origin": this.state, "coffeeShopId": this.props.coffeeShopId};
+      // post to api and update store
+      // addOrigin is defined in src/actions/originsActions.js
+      this.props.addOrigin(data);
+      // Reset state and form
+      this.setState({
+        name: ''
       });
+    } else {
+      errorDiv.innerHTML = "You must provide a name for a new coffee.";
+    }
   }
 }
 
