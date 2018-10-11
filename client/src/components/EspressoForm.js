@@ -49,6 +49,7 @@ class EspressoForm extends Component {
     // clear error div
     document.getElementById('formErrors').innerHTML = null;
     // prepare data to send to api
+    // we aren't using thunk to dispatch so we can preserve error messages
     const data = {"espresso": this.state};
     // post to api
     fetch(`/api/v1/origins/${this.props.originId}/espressos`, {
