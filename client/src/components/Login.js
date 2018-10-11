@@ -44,8 +44,6 @@ class Login extends Component {
     document.getElementById('formErrors').innerHTML = null;
     // Prepare data to send to api
     const data = {"coffee_shop": this.state};
-    const addCoffeeShop = this.props.addCoffeeShop;
-    const addOrigin = this.props.addOrigin;
     fetch('/api/v1/login', {
       method: 'POST',
       headers: {
@@ -57,8 +55,8 @@ class Login extends Component {
       .then(json => {
         if (json.coffee_shop) {
           // Update redux store with return data
-          addCoffeeShop(json.coffee_shop);
-          json.coffee_shop.origins.forEach(origin => addOrigin(origin));
+          this.props.addCoffeeShop(json.coffee_shop);
+          json.coffee_shop.origins.forEach(origin => this.props.addOrigin(origin));
           // Reset state and form
           this.setState({
             email: '',

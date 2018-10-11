@@ -1,4 +1,4 @@
-export const addOrigin = data => {
+export const createOrigin = data => {
   return dispatch => {
     dispatch({type: "POSTING_ORIGIN"});
     return fetch('api/v1/origins', {
@@ -16,3 +16,5 @@ export const addOrigin = data => {
       });
   }
 }
+
+export const addOrigin = origin => ({type: "ADD_ORIGIN", origin});

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addOrigin } from '../actions/originsActions';
+import { createOrigin } from '../actions/originsActions';
 
 class CoffeeForm extends Component {
   state = {
@@ -37,8 +37,8 @@ class CoffeeForm extends Component {
       // prepare data to send to api
       const data = {"origin": this.state, "coffeeShopId": this.props.coffeeShopId};
       // post to api and update store
-      // addOrigin is defined in src/actions/originsActions.js
-      this.props.addOrigin(data);
+      // createOrigin is defined in src/actions/originsActions.js
+      this.props.createOrigin(data);
       // Reset state and form
       this.setState({
         name: ''
@@ -51,7 +51,7 @@ class CoffeeForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addOrigin: origin => dispatch(addOrigin(origin))
+    createOrigin: origin => dispatch(createOrigin(origin))
   }
 }
 
