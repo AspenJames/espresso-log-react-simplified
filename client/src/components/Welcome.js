@@ -10,6 +10,8 @@ const Welcome = () => {
         <li>All weights are recorded in whole grams</li>
         <li>All times are recorded in whole seconds</li>
         <li>Mouse over data points to view details</li>
+        <li>You may show or hide parameters in the graph by clicking on their legend</li>
+        <li>Espresso recipes may be edited by clicking their point on the graph</li>
       </ul>
     </div>
   )
