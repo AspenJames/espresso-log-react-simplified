@@ -13,9 +13,9 @@ export default function espressosReducer(state = defaultState, action) {
       const idx = state.espressos.indexOf(state.espressos.find(esp => esp.id === action.espresso.id));
       let new_espressos = JSON.parse(JSON.stringify(state.espressos));
       new_espressos[idx] = action.espresso;
-      return {...state, espressos: new_espressos}
+      return {...state, espressos: new_espressos, request_pending: false}
 
-    case "SENDING_DELETE_REQUEST":
+    case "SENDING_REQUEST":
       return {...state, request_pending: true}
 
     case "DELETE_ESPRESSO":

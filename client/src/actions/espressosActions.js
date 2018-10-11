@@ -10,11 +10,28 @@ export const fetchEspressos = originId => {
 
 export const addEspresso = espresso => ({type: "ADD_ESPRESSO", espresso});
 
-export const updateEspresso = espresso => ({type: "UPDATE_ESPRESSO", espresso});
+// export const updateEspresso = espresso => ({type: "UPDATE_ESPRESSO", espresso});
+
+export const updateEspresso = data => {
+  return dispatch => {
+    dispatch({type: "SENDING_REQUEST"});
+    return fetch(`/api/v1/origins/${data.originId}/espressos/${data.espresso.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'applicaton/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(resp => resp.json())
+      .then(json => {
+        dispatch({type: "UPDATE_ESPRESSO", espresso: json.espresso});
+      });
+  }
+}
 
 export const deleteEspresso = (originId, espressoId) => {
   return dispatch => {
-    dispatch({type: "SENDING_DELETE_REQUEST"});
+    dispatch({type: "SENDING_REQUEST"});
     return fetch(`/api/v1/origins/${originId}/espressos/${espressoId}`, {
       method: 'DELETE',
       headers: {
@@ -24,7 +41,7 @@ export const deleteEspresso = (originId, espressoId) => {
       body: JSON.stringify({espressoId: espressoId})
     }).then(resp => resp.json())
       .then(json => {
-        dispatch({type: "DELETE_ESPRESSO", espressoID: json.espresso.id})
+        dispatch({type: "DELETE_ESPRESSO", espressoID: json.espresso.id});
       });
   }
 }

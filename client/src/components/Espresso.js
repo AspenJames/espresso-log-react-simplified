@@ -62,21 +62,11 @@ class Espresso extends Component {
     const data = {"coffeeShopId": this.props.coffeeShop.id,
                   "originId": this.origin.id,
                   "espresso": this.state}
-    // post to api
-    fetch(`/api/v1/origins/${this.originId}/espressos/${this.espressoId}`, {
-      method: 'PATCH',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(resp => resp.json())
-      .then(json => {
-        //update store with return data
-        this.props.updateEspresso(json.espresso);
-        // redirect back to /coffees/${originId}
-        this.props.history.push(`/coffees/${this.originId}`);
-      })
+    // post to api and update store
+    // updateEspresso is defined in src/actions/espressosActions.js
+    this.props.updateEspresso(data);
+    // redirect back to coffee page
+    this.props.history.push(`/coffees/${this.originId}`);
   }
 
   handleDelete = espressoId => {
