@@ -1,10 +1,13 @@
 export default function originsReducer(state = defaultState, action) {
   switch (action.type) {
+    case "POSTING_ORIGIN":
+      return {...state, posting: true};
+
     case "ADD_ORIGIN":
-      return {origins: state.origins.concat(action.origin)};
+      return {origins: state.origins.concat(action.origin), posting: false};
 
     case "RESET_STATE":
-      return {origins: action.payload.origins.origins};
+      return {origins: action.payload.origins.origins, posting: false};
 
     case "@@RESET":
       return defaultState;
@@ -14,4 +17,4 @@ export default function originsReducer(state = defaultState, action) {
   }
 }
 
-const defaultState = {origins: []}
+const defaultState = {posting: false, origins: []}
