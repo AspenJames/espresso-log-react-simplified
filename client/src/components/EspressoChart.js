@@ -50,7 +50,7 @@ class EspressoChart extends Component {
       },
       data: [{
         type: "spline",
-        name: "dose",
+        name: "dose (grams)",
         showInLegend: true,
         dataPoints: espressoData.map(esp => {
           return ({y: esp.dose, label: esp.id, click: () => this.onClick(esp.id)})
@@ -58,7 +58,7 @@ class EspressoChart extends Component {
       },
       {
         type: "spline",
-        name: "yield",
+        name: "yield (grams)",
         showInLegend: true,
         dataPoints: espressoData.map(esp => {
           return ({ y: esp.yield, label: esp.id, click: () => this.onClick(esp.id)})
@@ -66,7 +66,7 @@ class EspressoChart extends Component {
       },
       {
         type: "spline",
-        name: "time",
+        name: "time (seconds)",
         showInLegend: true,
         dataPoints: espressoData.map(esp => {
           return ({ y: esp.time, label: esp.id, click: () => this.onClick(esp.id)})
