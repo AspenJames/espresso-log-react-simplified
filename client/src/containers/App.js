@@ -47,9 +47,11 @@ class App extends Component {
       }
     }).then(resp => resp.json())
       .then(json => {
-        // reset redux store
-        this.props.resetCoffeeShop();
-        //TODO: error handling?
+        if (!json.error) {
+          // reset redux store
+          this.props.resetCoffeeShop();
+          this.props.history.push('/');
+        }
       })
   }
 }
