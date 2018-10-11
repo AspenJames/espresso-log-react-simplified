@@ -80,21 +80,11 @@ class Espresso extends Component {
   }
 
   handleDelete = espressoId => {
-    // delete on api side
-    fetch(`/api/v1/origins/${this.originId}/espressos/${this.espressoId}`, {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({espressoId})
-    }).then(resp => resp.json())
-      .then(json => {
-        //update store with return data
-        this.props.deleteEspresso(json.espresso.id);
-        //redirect to origin
-        this.props.history.push(`/coffees/${this.originId}`);
-      })
+    // delete espresso from server and store
+    // deleteEspresso is defined in src/actions/espressosActions.js
+    this.props.deleteEspresso(this.originId, espressoId);
+    // redirect to coffee page
+    this.props.history.push(`/coffees/${this.originId}`);
   }
 
   returnToCoffee = () => {
@@ -115,8 +105,8 @@ const mapDispatchToProps = dispatch => {
     updateEspresso: espresso => {
       dispatch(updateEspresso(espresso))
     },
-    deleteEspresso: espressoId => {
-      dispatch(deleteEspresso(espressoId))
+    deleteEspresso: (originId, espressoId) => {
+      dispatch(deleteEspresso(originId, espressoId))
     }
   }
 }

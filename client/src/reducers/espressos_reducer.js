@@ -15,8 +15,11 @@ export default function espressosReducer(state = defaultState, action) {
       new_espressos[idx] = action.espresso;
       return {...state, espressos: new_espressos}
 
+    case "SENDING_DELETE_REQUEST":
+      return {...state, request_pending: true}
+
     case "DELETE_ESPRESSO":
-      return {...state, espressos: state.espressos.filter(esp => esp.id !== action.espressoId)}
+      return {...state, espressos: state.espressos.filter(esp => esp.id !== action.espressoId), request_pending: false}
 
     case "RESET_STATE":
       return {...state, espressos: action.payload.espressos.espressos};
@@ -29,4 +32,4 @@ export default function espressosReducer(state = defaultState, action) {
   }
 }
 
-const defaultState = {loading: false, espressos: []}
+const defaultState = {loading: false, request_pending: false, espressos: []}
