@@ -4,7 +4,7 @@ const Welcome = () => {
   return (
     <div>
       <h2>Welcome to Espresso.Log!</h2>
-      <p>Create an account to start tracking your espresso recipes.</p>
+      <p>Create an account or login to start tracking your espresso recipes.</p>
       <h3>Notes for usage:</h3>
       <ul>
         <li>All weights are recorded in whole grams</li>
