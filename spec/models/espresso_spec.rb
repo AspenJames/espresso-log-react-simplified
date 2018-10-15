@@ -44,6 +44,7 @@ RSpec.describe Espresso, type: :model do
     @origin.save
     expect(@espresso.notes).to eq("Very tasty!")
   end
+<<<<<<< HEAD
 
   it "only saves whole numbers for numeric inputs" do
     @espresso = @origin.espressos.build.tap do |e|
@@ -58,4 +59,6 @@ RSpec.describe Espresso, type: :model do
     expect(@espresso.yield).to eq(32)
     expect(@espresso.time).to eq(25)
   end
+=======
+>>>>>>> 6ea3c8fe71ddc329cd5075b46346cfac4ab26fbf
 end
