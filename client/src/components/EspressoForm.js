@@ -52,6 +52,7 @@ class EspressoForm extends Component {
     // we aren't using thunk to dispatch so we can preserve error messages
     const data = {"espresso": this.state};
     // post to api
+    console.log('a');
     fetch(`/api/v1/origins/${this.props.originId}/espressos`, {
       method: "POST",
       headers: {
@@ -63,7 +64,9 @@ class EspressoForm extends Component {
       .then(json => {
         if (json.espresso) {
           // add to redux store
+          console.log('b');
           this.props.addEspresso(json.espresso);
+          console.log('c');
           this.setState({
             dose: '',
             yield: '',
@@ -75,6 +78,7 @@ class EspressoForm extends Component {
           document.getElementById('formErrors').innerHTML = json.errors.join(", ");
         }
       })
+    console.log('e');
   }
 }
 

@@ -32,8 +32,19 @@ class CoffeesContainer extends Component {
         </div>
       );
     } else {
-      return <CoffeesList coffees={this.props.origins} handleOnClick={this.handleOnClick} />;
+      // return <CoffeesList coffees={this.props.origins} handleOnClick={this.handleOnClick} />;
+      return(<div>{this.renderList()}</div>)
     }
+  }
+
+  renderList = () => {
+    // const origins = this.props.origins.map(origin => {
+    //   return <CoffeesList coffee={origin} handleOnClick={this.handleOnClick} />
+    // })
+    // debugger;
+    return this.props.origins.map(origin => {
+      return <CoffeesList coffee={origin} handleOnClick={this.handleOnClick} />
+    })
   }
 
   handleOnClick = event => {
