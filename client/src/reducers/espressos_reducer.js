@@ -9,6 +9,9 @@ export default function espressosReducer(state = defaultState, action) {
     case "ADD_ESPRESSO":
       return {...state, espressos: state.espressos.concat(action.espresso)}
 
+    case "ADD_ERROR":
+        return {...state, error: action.error}
+
     case "UPDATE_ESPRESSO":
       const idx = state.espressos.indexOf(state.espressos.find(esp => esp.id === action.espresso.id));
       let new_espressos = JSON.parse(JSON.stringify(state.espressos));
@@ -16,7 +19,7 @@ export default function espressosReducer(state = defaultState, action) {
       return {...state, espressos: new_espressos, request_pending: false}
 
     case "SENDING_REQUEST":
-      return {...state, request_pending: true}
+      return {...state, request_pending: true, error: ''}
 
     case "DELETE_ESPRESSO":
       return {...state, espressos: state.espressos.filter(esp => esp.id !== action.espressoId), request_pending: false}
@@ -32,4 +35,4 @@ export default function espressosReducer(state = defaultState, action) {
   }
 }
 
-const defaultState = {loading: false, request_pending: false, espressos: []}
+const defaultState = {loading: false, request_pending: false, error: '', espressos: []}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addEspresso } from '../actions/espressosActions';
+import { postEspresso } from '../actions/espressosActions';
 
 class EspressoForm extends Component {
   state = {
@@ -15,7 +15,7 @@ class EspressoForm extends Component {
   render() {
     return (
       <div className='formContainer'>
-        <div id='formErrors' />
+        <div id='formErrors'>{this.renderErrors()}</div>
         <form className='newEspresso' onSubmit={this.handleOnSubmit}>
           <label>Dose: </label>
           <input type='number' id='dose' value={this.state.dose}
@@ -38,6 +38,12 @@ class EspressoForm extends Component {
     );
   }
 
+  renderErrors = () => {
+      if (this.props.errors) {
+          return this.props.errors.join(', ');
+      }
+  }
+
   handleOnChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -46,42 +52,31 @@ class EspressoForm extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
-    // clear error div
-    document.getElementById('formErrors').innerHTML = null;
     // prepare data to send to api
     // we aren't using thunk to dispatch so we can preserve error messages
     const data = {"espresso": this.state};
     // post to api
-    fetch(`/api/v1/origins/${this.props.originId}/espressos`, {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(resp => resp.json())
-      .then(json => {
-        if (json.espresso) {
-          // add to redux store
-          this.props.addEspresso(json.espresso);
-          this.setState({
-            dose: '',
-            yield: '',
-            time: '',
-            days_off_roast: '',
-            notes: ''
-          });
-        } else {
-          document.getElementById('formErrors').innerHTML = json.errors.join(", ");
-        }
-      })
+    this.props.postEspresso(this.props.originId, data);
+    this.setState({
+        dose: '',
+        yield: '',
+        time: '',
+        days_off_roast: '',
+        notes: ''
+    });
   }
+}
+
+const mapStateToProps = state => {
+    return {
+        errors: state.espressos.error
+    }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addEspresso: espresso => dispatch(addEspresso(espresso))
+    postEspresso: (originId, data) => dispatch(postEspresso(originId, data))
   }
 }
 
-export default connect(null, mapDispatchToProps)(EspressoForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EspressoForm);

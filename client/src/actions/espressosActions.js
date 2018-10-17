@@ -10,6 +10,27 @@ export const fetchEspressos = originId => {
 
 export const addEspresso = espresso => ({type: "ADD_ESPRESSO", espresso});
 
+export const postEspresso = (originId, data) => {
+    return dispatch => {
+        dispatch({type: "SENDING_REQUEST"});
+        return fetch(`/api/v1/origins/${originId}/espressos`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(resp => resp.json())
+          .then(json => {
+              if (json.espresso) {
+                  dispatch({type: "ADD_ESPRESSO", espresso: json.espresso})
+              } else {
+                  dispatch({type: "ADD_ERROR", error: json.errors})
+              }
+          })
+    }
+}
+
 export const updateEspresso = data => {
   return dispatch => {
     dispatch({type: "SENDING_REQUEST"});
