@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { addCoffeeShop } from '../actions/coffeeShopActions';
+import { loginCoffeeShop } from '../actions/coffeeShopActions';
 import { addOrigin } from '../actions/originsActions';
 
 class Login extends Component {
@@ -18,7 +18,7 @@ class Login extends Component {
     }
     return (
       <div className='formContainer'>
-        <div id='formErrors' />
+        <div id='formErrors'>{this.renderErrors()}</div>
         <form className='login' onSubmit={this.handleOnSubmit}>
           <label>Email: </label>
           <input type='text' id='email' value={this.state.email}
@@ -30,6 +30,12 @@ class Login extends Component {
         </form>
       </div>
     )
+  }
+
+  renderErrors = () => {
+    if (this.props.coffeeShop.errors !== null) {
+      return this.props.coffeeShop.errors;
+    }
   }
 
   handleOnChange = event => {
@@ -44,33 +50,10 @@ class Login extends Component {
     document.getElementById('formErrors').innerHTML = null;
     // Prepare data to send to api
     const data = {"coffee_shop": this.state};
-    fetch('/api/v1/login', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(resp => resp.json())
-      .then(json => {
-        if (json.coffee_shop) {
-          // Update redux store with return data
-          this.props.addCoffeeShop(json.coffee_shop);
-          json.coffee_shop.origins.forEach(origin => this.props.addOrigin(origin));
-          // Reset state and form
-          this.setState({
-            email: '',
-            password: ''
-          });
-          // Redirect to coffees page
-          this.props.history.push('/coffees');
-        } else {
-          document.getElementById('formErrors').innerHTML = json.error;
-          this.setState({
-            password: ''
-          });
-        }
-      });
+    this.props.loginCoffeeShop(data);
+    this.setState({
+      password: ''
+    });
   }
 }
 
@@ -82,8 +65,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCoffeeShop: coffeeShop => {
-      dispatch(addCoffeeShop(coffeeShop))
+    loginCoffeeShop: data => {
+      dispatch(loginCoffeeShop(data))
     },
     addOrigin: origin => {
       dispatch(addOrigin(origin))
