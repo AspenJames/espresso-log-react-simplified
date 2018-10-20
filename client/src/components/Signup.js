@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { addCoffeeShop } from '../actions/coffeeShopActions';
+import { signupCoffeeShop } from '../actions/coffeeShopActions';
 
 class Signup extends Component {
   state = {
@@ -12,6 +12,10 @@ class Signup extends Component {
     password: ''
   }
 
+  componentWillUnmount() {
+    this.props.resetErrors();
+  }
+
   render() {
     if (this.props.coffeeShop.id !== null) {
       this.props.history.push('/coffees');
@@ -19,24 +23,30 @@ class Signup extends Component {
     }
     return (
       <div className='formContainer'>
-        <div id='formErrors' />
+        <div id='formErrors'>{this.renderErrors()}</div>
         <form className='signup' onSubmit={this.handleOnSubmit}>
           <label>Coffee Shop Name: </label>
           <input type='text' id='name' value={this.state.name}
-                 onChange={this.handleOnChange} /><br />
+            onChange={this.handleOnChange} /><br />
           <label>Address: </label>
           <input type='text' id='address' value={this.state.address}
-                 onChange={this.handleOnChange} /><br />
+            onChange={this.handleOnChange} /><br />
           <label>Email: </label>
           <input type='text' id='email' value={this.state.email}
-                 onChange={this.handleOnChange} /><br />
+            onChange={this.handleOnChange} /><br />
           <label>Password: </label>
           <input type='password' id='password' value={this.state.password}
-                 onChange={this.handleOnChange} /><br />
+            onChange={this.handleOnChange} /><br />
           <input type='submit' value='Sign Up' />
         </form>
       </div>
     );
+  }
+
+  renderErrors = () => {
+    if (this.props.coffeeShop.errors) {
+      return this.props.coffeeShop.errors.join(', ');
+    }
   }
 
   handleOnChange = event => {
@@ -50,34 +60,11 @@ class Signup extends Component {
     // Reset error div
     document.getElementById('formErrors').innerHTML = null;
     // prep data to send to api server
-    const data = {"coffee_shop": this.state}
-    const addCoffeeShop = this.props.addCoffeeShop;
+    const data = { "coffee_shop": this.state }
     // post to api server
-    fetch('/api/v1/coffee_shops', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(resp => resp.json())
-      .then(json => {
-        if (json.coffee_shop) {
-          // Add to store
-          addCoffeeShop(json.coffee_shop);
-          // Reset state and form
-          this.setState({
-            name: '',
-            address: '',
-            email: '',
-            password: ''
-          });
-        } else {
-          document.getElementById('formErrors').innerHTML = json.errors.join(', ');
-          this.setState({
-            password: ''
-          });
-        }
+    this.props.signupCoffeeShop(data);
+    this.setState({
+      password: ''
     });
   }
 }
@@ -90,8 +77,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCoffeeShop: coffeeShop => {
-      dispatch(addCoffeeShop(coffeeShop))
+    signupCoffeeShop: (data) => {
+      dispatch(signupCoffeeShop(data));
+    },
+    resetErrors: () => {
+      dispatch({ type: "RESET_ERRORS" })
     }
   }
 }

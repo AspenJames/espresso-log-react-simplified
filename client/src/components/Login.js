@@ -11,6 +11,10 @@ class Login extends Component {
     password: ''
   }
 
+  componentWillUnmount(){
+    this.props.resetErrors();
+  }
+
   render() {
     if (this.props.coffeeShop.id !== null) {
       this.props.history.push('/coffees');
@@ -70,6 +74,9 @@ const mapDispatchToProps = dispatch => {
     },
     addOrigin: origin => {
       dispatch(addOrigin(origin))
+    },
+    resetErrors: () => {
+      dispatch({type: "RESET_ERRORS"})
     }
   }
 }
