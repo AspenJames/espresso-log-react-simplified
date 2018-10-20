@@ -12,6 +12,7 @@ import CoffeesContainer from './Coffees.js';
 import Coffee from '../components/Coffee.js';
 import Espresso from '../components/Espresso';
 import Welcome from '../components/Welcome';
+import { logoutCoffeeShop } from '../actions/coffeeShopActions';
 
 class App extends Component {
   render() {
@@ -39,20 +40,7 @@ class App extends Component {
   handleLogout = event => {
     event.preventDefault();
     // post logout request to api server
-    fetch('/api/v1/logout', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then(resp => resp.json())
-      .then(json => {
-        if (!json.error) {
-          // reset redux store
-          this.props.resetCoffeeShop();
-          this.props.history.push('/');
-        }
-      })
+    this.props.logoutCoffeeShop();
   }
 }
 
@@ -64,8 +52,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    resetCoffeeShop: () => {
-      dispatch({ type: '@@RESET' });
+    logoutCoffeeShop: () => {
+      dispatch(logoutCoffeeShop())
     }
   }
 }

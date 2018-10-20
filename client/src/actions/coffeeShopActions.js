@@ -52,3 +52,21 @@ export const loginCoffeeShop = data => {
       });
   }
 }
+
+export const logoutCoffeeShop = () => {
+  return dispatch => {
+    dispatch({type: "SENDING_COFFEE_SHOP_REQUEST"});
+    return fetch(`/api/v1/logout`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(resp => resp.json())
+      .then(json => {
+        if (!json.error){
+          dispatch({type: "@@RESET"})
+        }
+      });
+  }
+}
