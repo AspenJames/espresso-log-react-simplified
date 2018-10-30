@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import coffeeShopReducer from './coffee_shop_reducer';
-import espressosReducer from './espressos_reducer';
-import originsReducer from './origins_reducer';
+import coffeeShopReducer from './coffeeShopReducer';
+import espressosReducer from './espressosReducer';
+import originsReducer from './originsReducer';
 
 const rootReducer = combineReducers({
   coffeeShop: coffeeShopReducer,
