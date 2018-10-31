@@ -73,6 +73,13 @@ describe("Coffees container", () => {
       expect(coffee.find(CoffeesList).length).toBe(0);
     });
 
+    it("renders a message stating you have no coffees yet", () => {
+      let p = coffees(
+        [addCoffeeShop({ id: 1, name: "cafe", address: "111 Programmer Ave" })]
+      ).find("p").first();
+      expect(p.text()).toEqual("You don't have any coffees in our system yet!");
+    })
+
     it("renders a CoffeesList when store.origins is populated", () => {
       let coffee = coffees(
         [
@@ -83,6 +90,17 @@ describe("Coffees container", () => {
       expect(coffee.find(CoffeesList).length).toBe(1);
     });
 
-  })
+    it("passes props.origins to CoffeesList when store.origins is populated", () => {
+      let coffee = coffees(
+        [
+          addCoffeeShop({ id: 1, name: "cafe", address: "111 Programmer Ave" }),
+          addOrigin({ id: 1, name: "Guatemala" })
+        ]
+      ).find(Coffees).first();
+      let coffeesList = coffee.find(CoffeesList).first();
+      expect(coffeesList.props().coffees).toContainEqual({ id: 1, name: "Guatemala" });
+    });
 
-})
+  });
+
+});
